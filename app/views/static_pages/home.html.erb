@@ -1,0 +1,34 @@
+<div class="homebody d-flex">
+    <div class="container">
+        <div class="row  justify-content-center">
+            <div class="report-container col-lg-3">
+                <h5>行われているライブ一覧を表示する</h5>
+            </div>
+            <div class="gmap-container col-lg-9">
+                <div id='map' class="gmap"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+let map
+
+function initMap(){
+geocoder = new google.maps.Geocoder()
+
+map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.6924892, lng:139.6972769},
+    zoom: 12,
+});
+
+marker = new google.maps.Marker({
+    position:  {lat: 35.6924892, lng:139.6972769},
+    map: map
+});
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY4V6hGZLX1sdrneCUr3280n5pLvxkBtk&callback=initMap" async defer></script>
+
