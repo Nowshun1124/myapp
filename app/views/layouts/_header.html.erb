@@ -3,25 +3,30 @@
     <nav class="navbar navbar-expand-lg bg-dark">
       <div class="container">
         <a class="navbar-brand text-white" href="/"><i class="fa-light fa-headphones-simple"></i>Livespot</a>
-        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"> 
-              <a class="nav-link active" aria-current="page" href="/">ホーム</a>
+            <li class="nav-item">
+              <%= link_to "ホーム", root_path, class: "nav-link active" %>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/message">メッセージ</a>
+              <%= link_to "メッセージ", message_path, class: "nav-link" %>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 設定
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">ユーザー登録</a></li>
-                <li><a class="dropdown-item" href="#">ユーザー設定</a></li>
-                <li><hr class="dropdown-divider"></li>
+                <li><%= link_to "無料会員登録", new_user_path, class: "dropdown-item" %></li>
+                <li><%= link_to "アカウント設定", new_user_path, class: "dropdown-item" %></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li><a class="dropdown-item" href="#">その他</a></li>
               </ul>
             </li>
@@ -35,4 +40,3 @@
     </nav>
   </div>
 </header>
-
