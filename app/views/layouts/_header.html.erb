@@ -21,14 +21,21 @@
                 aria-expanded="false">
                 設定
               </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "無料会員登録", new_user_path, class: "dropdown-item" %></li>
-                <li><%= link_to "ログイン", login_path, class: "dropdown-item" %></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">その他</a></li>
-              </ul>
+              <% if logged_in? %>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "ユーザー設定", edit_user_path(current_user), class: "dropdown-item" %></li>
+                  <li><%= link_to "ログアウト", logout_path, class: "dropdown-item", data: { "turbo-method": :delete } %></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">その他</a></li>
+                </ul>
+              <% else %>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "無料会員登録", new_user_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "ログイン", login_path, class: "dropdown-item" %></li>
+                </ul>
+              <% end %>
             </li>
           </ul>
           <form class="d-flex" role="search">

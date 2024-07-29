@@ -1,0 +1,24 @@
+<% provide(:title, "ユーザー設定") %>
+<div class="row content">
+	<div class="col-md-6 offset-md-3 sign-up-form">
+		<%= form_with(model: @user) do |f| %>
+			<%= render 'shared/error_messages' %>
+			
+			<%= f.label :username, "ユーザーネーム" %>
+			<%= f.text_field :username, class: "form-control" %>
+
+			<%= f.label :email, "メールアドレス" %>
+			<%= f.text_field :email, class: "form-control" %>
+
+			<%= f.label :password, "パスワード" %>
+			<%= f.text_field :password, class: "form-control" %>
+
+			<%= f.label :password_confirmation, "パスワード確認" %>
+			<%= f.text_field :password_confirmation, class: "form-control" %>
+
+			<%= f.submit "保存", class: "btn btn-primary" %>
+		<% end %>
+
+    <%= link_to "アカウント消去", user_path(current_user), data: { "turbo-method": :delete, turbo_confirm: "本当に消去しますか？" } %>
+	</div>
+</div>
