@@ -1,0 +1,69 @@
+<% provide(:title, "ライブを開催する") %>
+<div class="row content">
+  <div class="col-md-6 offset-md-3 sign-up-form">
+    <%= form_with(model: @live) do |f| %>
+
+      <div class="gmap-container">
+        <div id='map' class="gmap"></div>
+      </div>
+      <%= f.hidden_field :latitude, id: 'latitude' %>
+      <%= f.hidden_field :longitude, id: 'longitude' %>
+
+      <%= f.label :scheduled_at, "予定時刻" %>
+      <%= f.datetime_field :scheduled_at, class: "form-control" %>
+
+      <%= f.label :description, "詳細" %>
+      <%= f.text_field :description, class: "form-control" %>
+
+      <%= f.submit "確認", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+
+  let marker;
+
+  function initMap() {
+    const shinjuku = {
+      lat: 35.6896067,
+      lng: 139.7005713
+    };
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: shinjuku,
+    });
+
+    // This event listener calls addMarker() when the map is clicked.
+    google.maps.event.addListener(map, "click", (event) => {
+      addMarker(event.latLng, map);
+      console.log("Latitude: ", event.latLng.lat());
+      console.log("Longitude: ", event.latLng.lng());
+    });
+    // Add a marker at the center of the map.
+    addMarker(shinjuku, map);
+  }
+
+  // Adds a marker to the map.
+  function addMarker(location, map) {
+    // Add the marker at the clicked location, and add the next-available label
+    // from the array of alphabetical characters.
+    if (marker) {
+      marker.setMap(null);
+    }
+
+    marker = new google.maps.Marker({
+      position: location,
+      map: map,
+      draggable:true
+    });
+
+    // 緯度・経度をフォームの隠しフィールドに設定
+    document.getElementById("latitude").value = location.lat();
+    document.getElementById("longitude").value = location.lng();
+  }
+
+  window.initMap = initMap;
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY4V6hGZLX1sdrneCUr3280n5pLvxkBtk&callback=initMap"
+  asyncdefer></script>

@@ -13,6 +13,11 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.save
+      if @user.is_artist?
+        Artist.create(user_id: @user.id)
+      else
+        Listener.create(user_id: @user.id)
+      end
       reset_session
       log_in @user
       flash[:success] = "登録が完了しました！"
@@ -43,7 +48,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation)
+      params.require(:user).permit(:username, :email, :is_artist, :password, :password_confirmation)
     end
 
     def logged_in_user

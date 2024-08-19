@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bio: MyText
+  social_links: 
+  user: one
+
+two:
+  bio: MyText
+  social_links: 
+  user: two

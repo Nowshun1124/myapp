@@ -2,7 +2,13 @@
 	<div class="container content">
 		<div class="row  justify-content-center">
 			<div class="report-container col-lg-3">
-				<h5>行われているライブ一覧を表示する</h5>
+				<% @lives.each do |live| %>
+					<div class="live-item live-box" data-lat="<%= live.latitude %>" data-lng="<%= live.longitude %>">
+						<p class="artist_name"><%= live.artist.user.username %></p>
+						<p class="schedule"><%= live.scheduled_at %></p>
+						<p class="description"><%= live.description %></p>
+					</div>
+				<% end %>
 			</div>
 			<div class="gmap-container col-lg-9">
 				<div id='map' class="gmap"></div>
@@ -13,27 +19,100 @@
 
 
 <script>
-	let map
+	let map, currentLocationMarker;
+	let markers = [];
+
+	window.addEventListener('beforeunload', function () {
+		if (map) {
+			map = null;
+		}
+	});
 
 	function initMap() {
-		geocoder = new google.maps.Geocoder()
+		// 現在地を取得してマップに表示
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				const currentLocation = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+				};
 
-		map = new google.maps.Map(document.getElementById('map'), {
-			center: {
-				lat: 35.6924892,
-				lng: 139.6972769
-			},
-			zoom: 12,
-		});
+				// 現在地をセンターにして地図を初期化
+				map = new google.maps.Map(document.getElementById('map'), {
+					center: currentLocation,
+					zoom: 15,
+				});
 
-		marker = new google.maps.Marker({
-			position: {
-				lat: 35.6924892,
-				lng: 139.6972769
-			},
-			map: map
-		});
+				// 現在地にマーカーを配置
+				const currentLocationMarker = new google.maps.Marker({
+					position: currentLocation,
+					map: map,
+					icon: {
+						path: google.maps.SymbolPath.CIRCLE,
+						scale: 8,
+						fillColor: '#4285F4',
+						fillOpacity: 1,
+						strokeColor: '#ffffff',
+						strokeWeight: 2
+					},
+					title: "現在地"
+				});
+
+				// データベースから取得した場所にマーカーを表示
+				<% @lives.each do |m| %>
+					(function() {
+						const livelocation = {
+							lat: <%= m.latitude %>,
+							lng: <%= m.longitude %>
+						};
+
+						const marker = new google.maps.Marker({
+							position: livelocation,
+							map: map,
+							title: "ライブの場所"
+						});
+
+						markers.push(marker);
+
+						const infoWindow = new google.maps.InfoWindow({
+							content: `<p><%= m.artist.user.username %></p>`
+						});
+
+						//マーカーがクリックされたときにinfowindowを表示する
+						marker.addListener('click', () => {
+							infoWindow.open(map, marker);
+						});
+					})();
+				<% end %>
+
+				//live-itemがクリックされたとき、そこにズームインする
+				document.querySelectorAll('.live-item').forEach(item => {
+					item.addEventListener('click', function () {
+						const lat = parseFloat(this.dataset.lat);
+						const lng = parseFloat(this.dataset.lng);
+
+						const clickedMarker = markers.find(marker =>
+							marker.getPosition().lat() === lat && marker.getPosition().lng() === lng
+						);
+
+						if (clickedMarker) {
+							map.setCenter(clickedMarker.getPosition());
+							map.setZoom(18); // 適度にズームイン
+							clickedMarker.setAnimation(google.maps.Animation.BOUNCE); // アニメーションを追加
+
+							// 2秒後にアニメーションを停止
+							setTimeout(() => clickedMarker.setAnimation(null), 2000);
+						}
+					});
+				});
+
+			}, function() {
+				// エラーハンドリング
+				alert('現在地を取得できませんでした。');
+			});
+		} else {
+			alert('このブラウザでは現在地の取得がサポートされていません。');
+		}
 	}
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY4V6hGZLX1sdrneCUr3280n5pLvxkBtk&callback=initMap" async
-	defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY4V6hGZLX1sdrneCUr3280n5pLvxkBtk&callback=initMap" asyncdefer></script>

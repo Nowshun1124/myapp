@@ -33,7 +33,26 @@ body {
 }
 
 .report-container {
-    border: #000, solid;
+    border: solid #eeeeee;
+}
+
+.live-box {
+    border-bottom: solid #eeeeee;
+    padding: 0px 10px;
+}
+
+.live-box p {
+    margin: 0;
+}
+
+.live-box:hover{
+    background-color: #fffacd;
+}
+
+.artist_name {
+    font-weight: bold;
+    font-size: large;
+    color: #1e90ff;
 }
 
 // for debug information
@@ -78,12 +97,12 @@ input {
     margin-top: -10px;
     margin-bottom: 10px;
     span {
-      margin-left: 10px;
-      font-weight: normal;
+        margin-left: 10px;
+        font-weight: bold;
     }
   }
   
-  #session_remember_me {
+#session_remember_me, #user_is_artist {
     width: auto;
     margin-left: 0;
-  }
+}

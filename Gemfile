@@ -5,9 +5,15 @@ ruby "3.3.0"
 gem 'bootstrap', '~> 5.3.0'
 gem 'sass-rails'
 
+
 gem 'mysql2'
+gem 'rgeo'
+gem 'rgeo-activerecord'
 gem 'dotenv-rails'
 gem 'bcrypt'
+
+gem 'geocoder'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.3"
 

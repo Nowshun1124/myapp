@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+	has_one :artist, dependent: :destroy
+	has_one :listener, dependent: :destroy
 	attr_accessor :remember_token
 	before_save { self.email = email.downcase }
 	validates :username, presence: true, length: { maximum: 50 }

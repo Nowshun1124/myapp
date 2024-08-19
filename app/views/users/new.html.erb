@@ -16,6 +16,11 @@
 			<%= f.label :password_confirmation, "パスワード確認" %>
 			<%= f.text_field :password_confirmation, class: "form-control" %>
 
+			<%= f.label :is_artist, class: "checkbox inline" do %>
+        <%= f.check_box :is_artist %>
+        <span>アーティストアカウントとして登録する</span>
+      <% end %>
+
 			<%= f.submit "確認", class: "btn btn-primary" %>
 		<% end %>
 	</div>
