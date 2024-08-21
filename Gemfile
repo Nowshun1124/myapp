@@ -2,10 +2,12 @@ source "https://rubygems.org"
 
 ruby "3.3.0"
 
+# Bootstra,CSS系
 gem 'bootstrap', '~> 5.3.0'
 gem 'sass-rails'
+gem 'kaminari'
 
-
+# DB,ENV系
 gem 'mysql2'
 gem 'rgeo'
 gem 'rgeo-activerecord'

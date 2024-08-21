@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_10_025112) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_19_070640) do
   create_table "artists", charset: "utf8mb3", force: :cascade do |t|
     t.text "bio"
     t.json "social_links"
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_10_025112) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "remember_digest"
+    t.string "profile_text"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

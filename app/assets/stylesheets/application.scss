@@ -16,8 +16,8 @@ body {
 
 .gmap-container {
     position: relative;
-    padding-top: 56.25%;
-    /*16:9の比率にしたい場合、9/16=56.25%*/
+    height: 80vh;
+    //padding-top: 56.25%;
 }
 
 .gmap-container .gmap {
@@ -32,13 +32,27 @@ body {
     padding-top: 50px;
 }
 
+.body-header strong {
+    color: #000;
+    font-size: medium;
+}
+
+.body-header p {
+    color: #000;
+    font-size: small;
+}
+
 .report-container {
     border: solid #eeeeee;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-top: 5px;
 }
 
 .live-box {
     border-bottom: solid #eeeeee;
     padding: 0px 10px;
+    user-select: none;
 }
 
 .live-box p {
@@ -54,6 +68,20 @@ body {
     font-size: large;
     color: #1e90ff;
 }
+
+.a_name {
+    text-decoration: none;
+}
+
+.location {
+    font-size: small;
+    color: #bbb;
+}
+
+.paginate {
+    padding-top: 10px;
+}
+
 
 // for debug information
 .debug_dump {
@@ -105,4 +133,13 @@ input {
 #session_remember_me, #user_is_artist {
     width: auto;
     margin-left: 0;
+}
+
+//プロフィールページ
+.card-title {
+    font-weight: bold;
+}
+
+.follow-btn {
+    margin-top: 20px;
 }

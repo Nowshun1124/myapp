@@ -1,4 +1,6 @@
 class LivesController < ApplicationController
+  before_action :logged_in_user, only: [:new, :create, :edit, :destroy]
+  before_action :check_artist_user, only: [:new, :create, :edit, :destroy]
 
   def new
     @live = Live.new
@@ -26,8 +28,14 @@ class LivesController < ApplicationController
 
   private
 
-  def live_map_params
-    params.require(:live).permit(:scheduled_at, :description, :latitude, :longitude)
-  end
+    def live_map_params
+      params.require(:live).permit(:scheduled_at, :description, :latitude, :longitude)
+    end
 
+    def check_artist_user
+      unless current_user.is_artist == '1'
+        flash[:danger].now = "この操作はできません"
+        redirect_to root_url, status: :unprocessable_entity
+      end
+    end
 end

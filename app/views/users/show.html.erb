@@ -1,1 +1,24 @@
-<%= @user.username %>, <%= @user.email %>
+<div class="content">
+  <div class="card text-center">
+    <div class="card-header">
+      <%= @user.username %>のプロフィール
+    </div>
+    <div class="card-body">
+      <p><%= @user.profile_text %></p>
+      <% if @user.artist.present? %>
+        <h6 class="card-title">直近行われたライブ</h6>
+        <div class="live-content container d-flex row">
+          <% @user.artist.lives.each do |live| %>
+            <div class="card col-lg-4">
+              <p class="card-text"><%= live.scheduled_at %></p>
+              <p class="card-text"><%= live.description %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <% if @user != current_user %>
+        <a href="#" class="btn btn-primary follow-btn">フォローする</a>
+      <% end %>
+    </div>
+  </div>
+</div>

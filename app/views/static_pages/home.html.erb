@@ -1,14 +1,20 @@
 <div class="homebody d-flex">
 	<div class="container content">
-		<div class="row  justify-content-center">
+		<div class="row justify-content-center">
+			<div class="body-header">
+				<p>全 <strong><%= @lives.count %></strong> 件取得</p>	
+			</div>
 			<div class="report-container col-lg-3">
 				<% @lives.each do |live| %>
 					<div class="live-item live-box" data-lat="<%= live.latitude %>" data-lng="<%= live.longitude %>">
-						<p class="artist_name"><%= live.artist.user.username %></p>
+						<p class="artist_name"><%= link_to live.artist.user.username, user_path(live.artist.user), class: "a_name" %></p>
 						<p class="schedule"><%= live.scheduled_at %></p>
-						<p class="description"><%= live.description %></p>
+						<p class="location"></p>
 					</div>
 				<% end %>
+				<div class="paginate">
+					<%= paginate @lives %>
+				</div>
 			</div>
 			<div class="gmap-container col-lg-9">
 				<div id='map' class="gmap"></div>
@@ -81,6 +87,18 @@
 						//マーカーがクリックされたときにinfowindowを表示する
 						marker.addListener('click', () => {
 							infoWindow.open(map, marker);
+						});
+
+						// Geocoding APIで住所を取得
+						const geocoder = new google.maps.Geocoder();
+						geocoder.geocode({ location: livelocation }, (results, status) => {
+								if (status === "OK" && results[0]) {
+										const address = results[0].formatted_address;
+										const addressElement = document.querySelector(`[data-lat='<%= m.latitude %>'][data-lng='<%= m.longitude %>'] .location`);
+										addressElement.textContent = address;
+								} else {
+										console.error("Geocoder failed due to: " + status);
+								}
 						});
 					})();
 				<% end %>
