@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_19_070640) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_21_030606) do
   create_table "artists", charset: "utf8mb3", force: :cascade do |t|
     t.text "bio"
     t.json "social_links"
@@ -36,6 +36,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_070640) do
     t.float "latitude"
     t.float "longitude"
     t.index ["artist_id"], name: "index_lives_on_artist_id"
+  end
+
+  create_table "relationships", charset: "utf8mb3", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|

@@ -46,6 +46,18 @@ class UsersController < ApplicationController
     redirect_to root_url, status: :see_other 
   end
 
+  def following
+    @user = User.find(params[:id])
+    @users = @user.following
+    render 'show_follow'
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+    render 'show_followers'
+  end
+
   private
     def user_params
       params.require(:user).permit(:username, :email, :profile_text, :is_artist, :password, :password_confirmation)

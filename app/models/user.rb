@@ -1,6 +1,15 @@
 class User < ApplicationRecord
 	has_one :artist, dependent: :destroy
 	has_one :listener, dependent: :destroy
+	has_many :active_relationships, class_name: "Relationship",
+																	foreign_key: "follower_id",
+																	dependent: :destroy
+	has_many :following, through: :active_relationships, source: :followed
+
+	has_many :passive_relationships, class_name: "Relationship",
+																	 foreign_key: "followed_id",
+																	 dependent: :destroy
+	has_many :followers, through: :passive_relationships, source: :follower
 	attr_accessor :remember_token
 	before_save { self.email = email.downcase }
 	validates :username, presence: true, length: { maximum: 50 }
@@ -38,5 +47,28 @@ class User < ApplicationRecord
 
 	def forget
 		update_attribute(:remember_digest, nil)
+	end
+
+	def artist?
+		self.is_artist == true
+	end
+
+	def listener?
+		self.is_artist == false
+	end
+	
+	#フォローする
+	def follow(other_user)
+		following << other_user unless self == other_user #if other_user.artist && self.listener
+	end
+
+	#フォロー解除
+	def unfollow(other_user)
+		following.delete(other_user)
+	end
+
+	#　現在のユーザーがアーティストをフォローしていればtrueを返す
+	def following?(other_user)
+		following.include?(other_user)
 	end
 end
