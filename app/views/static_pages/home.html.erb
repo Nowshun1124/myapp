@@ -48,7 +48,7 @@
 					center: currentLocation,
 					zoom: 15,
 				});
-
+			
 				// 現在地にマーカーを配置
 				const currentLocationMarker = new google.maps.Marker({
 					position: currentLocation,
@@ -75,17 +75,17 @@
 						const marker = new google.maps.Marker({
 							position: livelocation,
 							map: map,
-							title: "ライブの場所"
+							title: "<%= m.artist.user.username %>"
 						});
 
 						markers.push(marker);
 
 						const infoWindow = new google.maps.InfoWindow({
 							content: `<div><p><%= m.artist.user.username %></p>
-														 <p><%= m.description %></div>`
+														<p><%= m.description %></div>`
 						});
 
-						//マーカーがクリックされたときにinfowindowを表示する
+						// マーカーがクリックされたときにinfowindowを表示する
 						marker.addListener('click', () => {
 							infoWindow.open(map, marker);
 						});
@@ -93,16 +93,55 @@
 						// Geocoding APIで住所を取得
 						const geocoder = new google.maps.Geocoder();
 						geocoder.geocode({ location: livelocation }, (results, status) => {
-								if (status === "OK" && results[0]) {
-										const address = results[0].formatted_address;
-										const addressElement = document.querySelector(`[data-lat='<%= m.latitude %>'][data-lng='<%= m.longitude %>'] .location`);
-										addressElement.textContent = address;
-								} else {
-										console.error("Geocoder failed due to: " + status);
-								}
+							if (status === "OK" && results[0]) {
+								const address = results[0].formatted_address;
+								const addressElement = document.querySelector(`[data-lat='<%= m.latitude %>'][data-lng='<%= m.longitude %>'] .location`);
+								addressElement.textContent = address;
+							} else {
+								console.error("Geocoder failed due to: " + status);
+							}
 						});
 					})();
 				<% end %>
+
+				// 検索フォームのイベントリスナーを追加
+				document.getElementById('location-search-form').addEventListener('submit', function (event) {
+					event.preventDefault(); // フォーム送信を無効化
+
+					const query = document.getElementById('location-input').value.trim().toLowerCase();
+					const geocoder = new google.maps.Geocoder();
+
+					geocoder.geocode({ 'address': query }, function (results, status) {
+						if (status === 'OK') {
+							const newCenter = results[0].geometry.location;
+							map.setCenter(newCenter);
+							map.setZoom(15); // 適度にズームイン
+
+							// 新しい位置にマーカーを追加
+							const marker = new google.maps.Marker({
+								position: newCenter,
+								map: map,
+								title: query
+							});
+						} else {
+							// アーティスト名で検索
+							const foundMarker = markers.find(marker =>
+								marker.getTitle().toLowerCase().includes(query)
+							);
+
+							if (foundMarker) {
+								map.setCenter(foundMarker.getPosition());
+								map.setZoom(18); // 適度にズームイン
+								foundMarker.setAnimation(google.maps.Animation.BOUNCE); // アニメーションを追加
+
+								// 2秒後にアニメーションを停止
+								setTimeout(() => foundMarker.setAnimation(null), 2000);
+							} else {
+								alert('地名やアーティストが見つかりませんでした: ' + status);
+							}
+						}
+					});
+				});
 
 				//live-itemがクリックされたとき、そこにズームインする
 				document.querySelectorAll('.live-item').forEach(item => {

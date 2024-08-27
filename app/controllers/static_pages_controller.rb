@@ -1,6 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
-    @lives = Live.all.page(params[:page]).per(10)
+    today = Date.today
+    @lives = Live.where(scheduled_at: today.beginning_of_day..today.end_of_day)
+                  .page(params[:page]).per(10)
   end
 
   def message
