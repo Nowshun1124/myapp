@@ -23,7 +23,13 @@ class LivesController < ApplicationController
 
 
   def destroy
-
+    Live.find(params[:id]).destroy
+    flash[:success] = "作成したライブを消去しました"
+    if request.referrer.nil?
+      redirect_to root_url, status: :see_other
+    else
+      redirect_to request.referrer, status: :see_other
+    end
   end
 
   private
@@ -33,7 +39,7 @@ class LivesController < ApplicationController
     end
 
     def check_artist_user
-      unless current_user.is_artist == '1'
+      unless current_user.is_artist == true
         flash[:danger].now = "この操作はできません"
         redirect_to root_url, status: :unprocessable_entity
       end

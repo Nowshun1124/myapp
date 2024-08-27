@@ -81,7 +81,8 @@
 						markers.push(marker);
 
 						const infoWindow = new google.maps.InfoWindow({
-							content: `<p><%= m.artist.user.username %></p>`
+							content: `<div><p><%= m.artist.user.username %></p>
+														 <p><%= m.description %></div>`
 						});
 
 						//マーカーがクリックされたときにinfowindowを表示する

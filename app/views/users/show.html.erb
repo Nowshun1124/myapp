@@ -13,4 +13,24 @@
       <%= render 'follow_form' if @user != current_user && @user.is_artist && logged_in? %>
     </div>
   </div>
+  <% if @user_lives.present? %>
+    <div class="report-container col-lg-6 profile_lives">
+    <% @user_lives.each do |live| %>
+      <div class="live-item live-box" data-lat="<%= live.latitude %>" data-lng="<%= live.longitude %>">
+        <p class="artist_name"><%= link_to live.artist.user.username, user_path(live.artist.user), class: "a_name" %>
+        </p>
+        <p class="schedule"><%= live.scheduled_at %></p>
+        <% if @user == current_user %>
+        <%= link_to "消去", live, data: { "turbo-method": :delete, turbo_confirm: "本当に消去しますか？" } %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="paginate">
+      <%= paginate @user_lives %>
+    </div>
+    </div>
+  <% else %>
+    <p>このユーザーのライブ情報はありません。</p>
+  <% end %>
 </div>
+
