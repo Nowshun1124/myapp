@@ -13,24 +13,51 @@
       <%= render 'follow_form' if @user != current_user && @user.is_artist && logged_in? %>
     </div>
   </div>
-  <% if @user_lives.present? %>
-    <div class="report-container col-lg-6 profile_lives">
-    <% @user_lives.each do |live| %>
-      <div class="live-item live-box" data-lat="<%= live.latitude %>" data-lng="<%= live.longitude %>">
-        <p class="artist_name"><%= link_to live.artist.user.username, user_path(live.artist.user), class: "a_name" %>
-        </p>
-        <p class="schedule"><%= live.scheduled_at %></p>
-        <% if @user == current_user %>
-        <%= link_to "消去", live, data: { "turbo-method": :delete, turbo_confirm: "本当に消去しますか？" } %>
+  <div class="users-post d-flex">
+    <% if @user_lives.present? %>
+      <div class="report-container col-md-5 profile_lives">
+        <% @user_lives.each do |live| %>
+        <div class="live-item live-box" data-lat="<%= live.latitude %>" data-lng="<%= live.longitude %>">
+          <p class="artist_name"><%= link_to live.artist.user.username, user_path(live.artist.user), class: "a_name" %>
+          </p>
+          <p class="schedule"><%= live.scheduled_at %></p>
+          <% if @user == current_user %>
+          <%= link_to "消去", live, data: { "turbo-method": :delete, turbo_confirm: "本当に消去しますか？" } %>
+          <% end %>
+        </div>
         <% end %>
+        <div class="paginate">
+          <%= paginate @user_lives %>
+        </div>
       </div>
+    <% else %>
+      <p>このユーザーのライブ情報はありません。</p>
     <% end %>
-    <div class="paginate">
-      <%= paginate @user_lives %>
-    </div>
-    </div>
-  <% else %>
-    <p>このユーザーのライブ情報はありません。</p>
-  <% end %>
-</div>
+    <% if @notifications.present? %>
+      <div class="message-container col-md-6 profile_lives">
+        <% @notifications.each do |notification| %>
+          <div class="card">
+            <div class="card-header">
+              <a><%= time_ago_in_words(notification.created_at) %>前</a>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= link_to notification.artist.user.username, user_path(notification.artist.user), class: "a_name" %>
+              </h5>
+              <p class="card-text"><%= simple_format(notification.message) %></p>
+              <% if notification.artist.user == current_user %>
+              <%= link_to "消去", notification, data: { "turbo-method": :delete, turbo_confirm: "本当に消去しますか？" } %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <div class="paginate">
+          <%= paginate @notifications %>
+        </div>
+      </div>
+    <% else %>
+      <p>あ</p>
+    <% end %>
+  </div>
+  
 

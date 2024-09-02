@@ -6,5 +6,7 @@ class StaticPagesController < ApplicationController
   end
 
   def message
+    @followed_artist = current_user.following.joins(:artist)
+    @notifications = Notification.where(artist: @followed_artist).order(created_at: :desc)
   end
 end

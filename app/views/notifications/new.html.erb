@@ -1,0 +1,12 @@
+<% provide(:title, "フォロワーにメッセージを送信する") %>
+<div class="row content">
+	<div class="col-md-6 offset-md-3 sign-up-form">
+		<%= form_with(model: @notification, url: notifications_path) do |f| %>
+			
+			<%= f.label :message, "内容" %>
+			<%= f.text_area :message, class: "form-control", rows: 10 %>
+
+			<%= f.submit "送信", class: "btn btn-primary" %>
+		<% end %>
+	</div>
+</div>

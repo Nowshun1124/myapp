@@ -82,8 +82,49 @@ body {
     padding-top: 10px;
 }
 
+.flash-content {
+    padding-top: 15px;
+}
 
-// for debug information
+.checkbox {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    span {
+        margin-left: 10px;
+        font-weight: bold;
+    }
+  }
+  
+#session_remember_me, #user_is_artist {
+    width: auto;
+    margin-left: 0;
+}
+
+//プロフィールページ
+.card {
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.follow-btn {
+    margin-top: 20px;
+}
+
+.profile_lives {
+    margin: 20px auto 0 auto;
+}
+
+.message-container {
+    border: solid #eeeeee;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-top: 5px;
+}
+
+// デバッグ
 .debug_dump {
     background-color: #000;
     clear: both;
@@ -115,36 +156,4 @@ input {
         color: red;
         margin: 0 0 30px 0;
     }
-}
-
-.flash-content {
-    padding-top: 15px;
-}
-
-.checkbox {
-    margin-top: -10px;
-    margin-bottom: 10px;
-    span {
-        margin-left: 10px;
-        font-weight: bold;
-    }
-  }
-  
-#session_remember_me, #user_is_artist {
-    width: auto;
-    margin-left: 0;
-}
-
-//プロフィールページ
-
-.card-title {
-    font-weight: bold;
-}
-
-.follow-btn {
-    margin-top: 20px;
-}
-
-.profile_lives {
-    margin: 20px auto 0 auto;
 }

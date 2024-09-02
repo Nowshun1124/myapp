@@ -13,9 +13,11 @@
             <li class="nav-item">
               <%= link_to "ホーム", root_path, class: "nav-link active" %>
             </li>
+            <% if logged_in? && current_user.is_artist == false %>
             <li class="nav-item">
               <%= link_to "メッセージ", message_path, class: "nav-link" %>
             </li>
+            <% end %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -24,7 +26,8 @@
               <% if logged_in? %>
                 <ul class="dropdown-menu">
                   <% if current_user.is_artist == true %>
-                    <li><%= link_to "ライブ設定", new_life_path, class: "dropdown-item" %></li>
+                    <li><%= link_to "ライブを開催する", new_life_path, class: "dropdown-item" %></li>
+                    <li><%= link_to "告知", new_notification_path, class: "dropdown-item" %></li>
                   <% end %>
                   <li><%= link_to "プロフィール", user_path(current_user), class: "dropdown-item" %></li>
                   <li><%= link_to "ユーザー設定", edit_user_path(current_user), class: "dropdown-item" %></li>

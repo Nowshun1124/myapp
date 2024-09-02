@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_21_030606) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_30_115902) do
   create_table "artists", charset: "utf8mb3", force: :cascade do |t|
     t.text "bio"
     t.json "social_links"
@@ -38,6 +38,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_21_030606) do
     t.index ["artist_id"], name: "index_lives_on_artist_id"
   end
 
+  create_table "notifications", charset: "utf8mb3", force: :cascade do |t|
+    t.text "message"
+    t.bigint "artist_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id", "created_at"], name: "index_notifications_on_artist_id_and_created_at"
+    t.index ["artist_id"], name: "index_notifications_on_artist_id"
+  end
+
   create_table "relationships", charset: "utf8mb3", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
@@ -63,4 +72,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_21_030606) do
   add_foreign_key "artists", "users"
   add_foreign_key "listeners", "users"
   add_foreign_key "lives", "artists"
+  add_foreign_key "notifications", "artists"
 end

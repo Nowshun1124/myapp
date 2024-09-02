@@ -1,1 +1,20 @@
-<div>メッセージ一覧</div>
+<div class="container content">
+  <div class="row justify-content-center">
+    <% @notifications.each do |notification| %>
+      <div class="card col-md-7">
+        <div class="card-header">
+          <a><%= time_ago_in_words(notification.created_at) %>前</a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= link_to notification.artist.user.username, user_path(notification.artist.user), class: "a_name" %>
+          </h5>
+          <p class="card-text"><%= simple_format(notification.message) %></p>
+        </div>
+      </div>
+    <% end %>
+    <div class="paginate">
+      <%= paginate @notifications %>
+    </div>
+  </div>
+</div>

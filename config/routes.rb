@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   end
   resources :artists
   resources :lives, only: [:new, :create, :destroy]
+  resources :notifications, only: [:new, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
 end

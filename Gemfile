@@ -84,3 +84,5 @@ group :production do
   gem "pg", "1.3.5"
 end
 
+
+gem "rails-i18n", "~> 7.0"

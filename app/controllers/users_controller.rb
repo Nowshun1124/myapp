@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @user_lives = @user.artist&.lives&.page(params[:page])&.per(10)
+    @notifications = @user.artist&.notifications&.order(created_at: :desc)&.page(params[:page])&.per(10) || Notification.none
   end
 
   def new

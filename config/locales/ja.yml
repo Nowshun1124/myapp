@@ -1,0 +1,10 @@
+ja:
+  hello: "こんにちは"
+  time:
+    formats:
+      default: "%Y年%m月%d日 %H時%M分%S秒"
+    distance_in_words:
+      about_x_hours:
+        one: "約1時間"
+        other: "約%{count}時間"
+  # 必要な翻訳を追加
