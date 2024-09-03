@@ -20,17 +20,17 @@
   </div>
 </div>
 
-<script>
+<script> 
 
   let marker;
 
-  function initMap() {
+  function init_liveMap() {
     const shinjuku = {
       lat: 35.6896067,
       lng: 139.7005713
     };
     const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 12,
+      zoom: 15,
       center: shinjuku,
     });
 
@@ -65,5 +65,5 @@
 
   window.initMap = initMap;
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY4V6hGZLX1sdrneCUr3280n5pLvxkBtk&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY4V6hGZLX1sdrneCUr3280n5pLvxkBtk&callback=init_liveMap"
   asyncdefer></script>
