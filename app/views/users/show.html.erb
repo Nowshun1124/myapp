@@ -13,9 +13,9 @@
       <%= render 'follow_form' if @user != current_user && @user.is_artist && logged_in? %>
     </div>
   </div>
-  <div class="users-post d-flex">
+  <div class="users-post">
     <% if @user_lives.present? %>
-      <div class="report-container col-md-5 profile_lives">
+      <div class="live-container col-md-5 profile_lives">
         <% @user_lives.each do |live| %>
         <div class="live-item live-box" data-lat="<%= live.latitude %>" data-lng="<%= live.longitude %>">
           <p class="artist_name"><%= link_to live.artist.user.username, user_path(live.artist.user), class: "a_name" %>

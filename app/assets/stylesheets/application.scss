@@ -101,6 +101,13 @@ body {
 }
 
 //プロフィールページ
+.live-container {
+    border: solid #eeeeee;
+    max-height: 30vh;
+    overflow-y: auto;
+    padding-top: 5px;
+}
+
 .card {
     margin-bottom: 10px;
 }
